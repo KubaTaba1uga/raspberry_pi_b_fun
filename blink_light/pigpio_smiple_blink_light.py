@@ -8,7 +8,7 @@ Built and tested with Python 3.7 on Raspberry Pi 4 Model B
 """
 from time import sleep
 
-import pigpio  # (1)
+import pigpio
 from common import get_raspberry_ip
 
 GPIO_PIN = 21
@@ -22,22 +22,22 @@ def main():
         try:
             blink(pi)
         except KeyboardInterrupt:
-            turn_off(pi)
+            light_off(pi)
             break
 
 
 def blink(pi):
-    turn_on(pi)
+    light_on(pi)
     sleep(1.8)
-    turn_off(pi)
+    light_off(pi)
     sleep(1)
 
 
-def turn_on(pi):
+def light_on(pi):
     pi.write(GPIO_PIN, 1)  # 1 = High = On      # (4)
 
 
-def turn_off(pi):
+def light_off(pi):
     pi.write(GPIO_PIN, 0)  # 0 = Low = Off      # (5)
 
 
