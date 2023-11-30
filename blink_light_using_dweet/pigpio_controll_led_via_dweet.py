@@ -110,16 +110,21 @@ def persist_led(func):
 
 
 @persist_led
-def process_dweet(pi, dweet, last_led_state):
+def process_dweet(pi, dweet, last_led_state=None):
     """Inspect the dweet and set LED state accordingly"""
 
     if not (led_state := dweet.get("state")):
         return
 
-    if led_state == "on":  # (15)
-        light_on(pi)
-    elif led_state == "blink":
+    if (
+        last_led_state == led_state and led_state != "blink"
+    ):  # Blink should be repetable
+        return
+
+    if led_state == "blink":
         blink(pi)
+    elif led_state == "on":  # (15)
+        light_on(pi)
     elif led_state == "off":
         light_off(pi)
     else:
