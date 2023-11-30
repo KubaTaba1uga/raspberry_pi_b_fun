@@ -21,7 +21,11 @@ def main():
     pi.set_mode(LED_PIN, pigpio.OUTPUT)
     set_up_button()
 
-    pi.callback(BUTTON_PIN, pigpio.FALLING_EDGE, pressed)
+    # There are three options available for button:
+    #  - FALLING_EDGE callback is called when You pressed the button
+    #  - RISING_EDGE callback is called when You released the button
+    #  - EITHER_EDGE callback is called when You both press and release the button
+    pi.callback(BUTTON_PIN, pigpio.EITHER_EDGE, pressed)
 
 
 def set_up_button():
