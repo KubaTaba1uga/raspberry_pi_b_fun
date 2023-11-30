@@ -116,11 +116,6 @@ def process_dweet(pi, dweet, last_led_state=None):
     if not (led_state := dweet.get("state")):
         return
 
-    if (
-        last_led_state == led_state and led_state != "blink"
-    ):  # Blink should be repetable
-        return
-
     if led_state == "blink":
         blink(pi)
     elif led_state == "on":  # (15)
@@ -166,10 +161,20 @@ def blink(pi):
 
 
 def light_on(pi):
+    is_light_on = pi.read(GPIO_PIN)
+
+    if is_light_on:
+        return
+
     pi.write(GPIO_PIN, 1)  # 1 = High = On      # (4)
 
 
 def light_off(pi):
+    is_light_off = not pi.read(GPIO_PIN)
+
+    if is_light_off:
+        return
+
     pi.write(GPIO_PIN, 0)  # 0 = Low = Off      # (5)
 
 
