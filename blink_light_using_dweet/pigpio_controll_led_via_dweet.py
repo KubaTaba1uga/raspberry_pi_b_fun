@@ -6,7 +6,7 @@ Dependencies:
 
 Built and tested with Python 3.7 on Raspberry Pi 4 Model B
 """
-import hashlib
+
 import logging
 import signal
 import sys
@@ -14,13 +14,14 @@ from time import sleep
 
 import pigpio
 import requests  # (1)
-from common import get_raspberry_ip
+from common import get_raspberry_ip, resolve_device_id
 
 GPIO_PIN = 21
 URL = "https://dweet.io"  # Dweet.io service API
-DEVICE_ID_SEED = "whatever123"
+
 
 dweets_cache = {}
+
 
 logging.basicConfig(level=logging.WARNING)  # Global logging configuration
 logger = logging.getLogger("main")  # Logger for this module
@@ -48,7 +49,7 @@ def main():
     print("Waiting for dweets. Press Control+C to exit.")
 
     poll_dweets_forever(
-        pi, device_id, delay_secs=2
+        pi, device_id, delay_secs=0
     )  # Get dweets by polling a URL on a schedule.            # (19)
 
 
@@ -141,16 +142,6 @@ def poll_dweets_forever(pi, device_id, delay_secs=2):
         process_dweet(pi, dweet)  # (12)
 
         sleep(delay_secs)  # (13)
-
-
-def resolve_device_id():
-    h = hashlib.new("sha256")  # sha256 can be replaced with diffrent algorithms
-
-    h.update(
-        DEVICE_ID_SEED.encode()
-    )  # give a encoded string. Makes the String to the Hash
-
-    return h.hexdigest()
 
 
 def blink(pi):
