@@ -55,7 +55,7 @@ def test_connect(auth):
 
 @socketio.on("disconnect")
 def test_disconnect():
-    registered_lights.pop(request.sid)
+    registered_lights.pop(request.sid, None)
 
     print("Client disconnected", request.sid)
 
