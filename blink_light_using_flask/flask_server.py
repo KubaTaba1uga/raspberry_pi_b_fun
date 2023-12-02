@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret!"
@@ -41,6 +41,9 @@ def led_command(sid, data):
 @socketio.on("connect")
 def test_connect(auth):
     SECRET = "abcvbcbcbcbcbc"
+
+    if len(registered_lights) > 0:
+        return
 
     if auth.get("secret") != SECRET:
         return
