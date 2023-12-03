@@ -1,3 +1,12 @@
+"""
+A Python program to host a HTTP+WEBSOCKET server.
+Server can be combined with websocket_client.py to controll raspberry pi.
+
+Dependencies:
+  pip3 install flask flask_socketio
+
+Built and tested with Python 3.7 on Raspberry Pi 3 Model B
+"""
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 

@@ -1,3 +1,13 @@
+"""
+A Python program to controll a led via WEBSOCKET connection.
+Client connects via websocket to flask_server.py, using the
+connection server is able to controll the raspberry pi.
+
+Dependencies:
+  pip3 install socketio gpiozero
+
+Built and tested with Python 3.7 on Raspberry Pi 3 Model B
+"""
 from time import sleep
 
 import socketio
