@@ -22,7 +22,7 @@ from gpiozero.pins.pigpio import PiGPIOFactory
 
 DEVICE_ID = "light/0"
 GPIO_PIN = 21
-SLEEP_TIME = 0.01
+SLEEP_TIME = 0.1
 
 # Initialize Logging
 logging.basicConfig(level=logging.WARNING)  # Global logging configuration
@@ -60,7 +60,7 @@ def on_connect(client, userdata, flags, rc):
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe(topic=DEVICE_ID, qos=0)
+    client.subscribe(topic=DEVICE_ID, qos=2)
 
 
 # The callback for when a PUBLISH message is received from the server.

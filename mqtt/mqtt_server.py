@@ -1,9 +1,8 @@
 """
-A Python program to .
-Server can be combined with websocket_client.py to controll raspberry pi.
+A Python program allowing webbrowser to controll the light.
 
 Dependencies:
-  pip3 install flask flask_socketio
+  pip3 install flask flask_socketio paho-mqtt
 
 Built and tested with Python 3.7 on Raspberry Pi 3 Model B
 """
@@ -15,7 +14,6 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret!"
 socketio = SocketIO(app)
 client = mqtt.Client()
-
 
 registered_light = "light/0"
 
@@ -35,7 +33,7 @@ def post_led_command():
         if not is_command:
             continue
 
-        client.publish(topic=registered_light, payload=command, qos=0)
+        client.publish(topic=registered_light, payload=command, qos=2)
 
         break
     else:

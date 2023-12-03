@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HTML5 Boilerplate</title>
+    <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" integrity="sha384-mZLF4UVrpi/QTWPA7BjNPEnkIfRFn4ZEO3Qt/HFklTJBj/gBOV8G3HcKn4NfQblz" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div>
+      <h1>Controll led light</h1>
+    </div>
+    <div>
+      Light status: <span id="status">None</span><br><br>
+    </div>
+    <div>
+      <button hx-post="/led?turn_on=true" hx-swap="none">
+	Turn on the light
+      </button>
+      <button hx-post="/led?turn_off=true" hx-swap="none">
+	Turn off the light
+      </button>  
+      <button hx-post="/led?blink=true" hx-swap="none">
+	Blink the light
+      </button>
+    </div>
+    <script type="module">
+      import { io } from "https://cdn.socket.io/4.7.2/socket.io.esm.min.js";
+    </script>
+    <script>
+      const socket = io();
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HTML5 Boilerplate</title>
-  <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>    
-</head>
+      var enc = new TextDecoder("utf-8");      
+      
+      socket.on('led status', (msg) => {
+          msg = enc.decode(msg);
+	  displayResult(msg);
+	  console.log('message: ' + msg);
+      });
 
-<body>
-  <h1>Controll led light</h1>
-  
-  <button hx-post="/led?turn_on=true" hx-swap="none">
-    Turn on the light
-  </button>
-  <button hx-post="/led?turn_off=true" hx-swap="none">
-    Turn off the light
-  </button>  
-  <button hx-post="/led?blink=true" hx-swap="none">
-    Blink the light
-  </button>  
-</body>
-
+      function displayResult(result) {
+	  document.getElementById("status").innerHTML = result;
+      }      
+    </script>
+  </body>
 </html>

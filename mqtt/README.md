@@ -1,3 +1,12 @@
+# Example
+
+mqtt_server.py is a proxy between webbrowser and raspberry pi client. 
+
+Browser is using HTTP to control the light and WEBSOCKETS to recive light's status.
+
+mqtt_client.py is responsible for exposing controll over the light. This module is
+responsible for gpios and lower level stuff.
+
 # MQTT overview
 
 MQTT is sub-pub protocol. 
